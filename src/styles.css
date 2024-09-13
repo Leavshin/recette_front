@@ -1,0 +1,207 @@
+/* Définition des couleurs principales */
+:root {
+    --primary-color: #4CAF50; /* Couleur principale fraîche */
+    --secondary-color: #FFC107; /* Couleur secondaire douce */
+    --background-color: #F4F4F9; /* Fond léger et moderne */
+    --text-color: #333333; /* Couleur du texte sombre pour une bonne lisibilité */
+    --card-bg: #FFFFFF; /* Fond des cartes blanc pour le contraste */
+    --card-shadow: rgba(0, 0, 0, 0.1); /* Ombre douce */
+    --hover-bg: #F1F8E9; /* Couleur de survol pour les éléments interactifs */
+    --border-color: #E0E0E0; /* Couleur de bordure discrète */
+  }
+  
+  /* Styles globaux */
+  body {
+    font-family: 'Roboto', sans-serif; /* Police moderne et élégante */
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+  
+  /* Conteneur central */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* En-tête */
+  header {
+    background-color: var(--primary-color);
+    padding: 20px 0;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1000;
+  }
+  
+  /* Styles pour la barre de navigation */
+  .navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1000;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+  
+  .logo-img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .logo-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+  
+  .navbar-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-item {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .navbar-item:hover {
+    background-color: var(--hover-bg);
+    color: var(--primary-color);
+  }
+  
+  /* Styles pour le bouton de connexion */
+  .navbar-button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 0.75rem 1.25rem;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar-button:hover {
+    background-color: #FFC107;
+  }
+  
+  /* Styles pour les cartes de recettes */
+  .card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--card-shadow);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px var(--card-shadow);
+  }
+  
+  /* Styles pour les formulaires d'authentification */
+  .auth-form {
+    max-width: 400px;
+    width: 90%;
+    margin: 2rem auto;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--card-shadow);
+  }
+  
+  .auth-form h2 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 20px;
+  }
+  
+  .auth-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .auth-form input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .auth-form input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+  }
+  
+  /* Bouton de formulaire */
+  .auth-form button {
+    width: auto;
+    min-width: 120px;
+    margin-bottom: 15px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .auth-form button:hover {
+    background-color: #388E3C;
+  }
+  
+  /* Liens dans les formulaires */
+  .auth-form nav {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .auth-form nav a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+  
+  .auth-form nav a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Pied de page */
+  footer {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  }
+  

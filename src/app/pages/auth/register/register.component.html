@@ -1,0 +1,21 @@
+<div class="auth-form">
+  <h2>Inscription</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <input type="email" [(ngModel)]="email" name="email" id="email" placeholder="Email" required>
+    </div>
+    <div>
+      <input type="password" [(ngModel)]="password" name="password" id="password" placeholder="Mot de passe" required>
+    </div>
+    <div>
+      <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" id="confirmPassword" placeholder="Confirmer le mot de passe" required>
+    </div>
+    <button type="submit">S'inscrire</button>
+  </form>
+
+  <nav>
+    <p>Déjà un compte ? <a routerLink="/auth/login">Se connecter</a></p>
+  </nav>
+</div>
+
+<router-outlet></router-outlet>
