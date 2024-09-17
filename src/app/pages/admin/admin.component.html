@@ -1,15 +1,17 @@
-<h1>Admin</h1>
+<h1 class="admin-title">Administration</h1>
 
-<nav>
-  <ul>
-    <li>
-      <a routerLink="/admin/user">Gestion des utilisateurs</a>
+<nav class="admin-nav">
+  <ul class="admin-menu">
+    <li class="admin-menu-item">
+      <a routerLink="/admin/user" class="admin-link">Gestion des utilisateurs</a>
     </li>
-    <li>
-      <a routerLink="/admin/recipe">Gestion des recettes</a>
+    <li class="admin-menu-item">
+      <a routerLink="/admin/recipe" class="admin-link">Gestion des recettes</a>
     </li>
   </ul>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="admin-content">
+  <router-outlet></router-outlet>
+</div>
 
