@@ -5,7 +5,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   selector: 'app-admin',
   standalone: true,
   imports: [
-    RouterOutlet,
+    RouterOutlet, 
     RouterLink
   ],
   templateUrl: './admin.component.html',
