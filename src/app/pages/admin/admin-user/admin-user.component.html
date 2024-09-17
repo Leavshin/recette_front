@@ -1,1 +1,26 @@
-<p>admin-user works!</p>
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Nom</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (user of users; track user.id) {
+      <tr>
+        <td>{{ user.email }}</td>
+        <td>{{ user.name }}</td>
+        <td>
+          <button (click)="editUser(user.id)">Edit</button>
+          <button (click)="deleteUser(user.id)">Delete</button>
+        </td>
+      </tr>
+    }
+    @empty {
+      <tr>
+        <td colspan="3">No users found</td>
+      </tr>
+    }
+  </tbody>
+</table>

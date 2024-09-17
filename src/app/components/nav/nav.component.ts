@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../utils/services/auth.service';
+import { HomeComponent } from "../../pages/home/home.component";
 
 @Component({
   selector: 'app-nav',
   standalone: true,
   imports: [
-    RouterLink
-  ],
+    RouterLink,
+    HomeComponent
+],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })

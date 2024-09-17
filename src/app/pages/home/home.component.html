@@ -1,1 +1,38 @@
-<p>home works!</p>
+<div>
+<form>
+  <input type="text" placeholder="Filtrer par mots-clés" />
+  <button class="primary" type="button">Rechercher</button>
+</form>
+</div>
+<div class="results">
+<app-home></app-home>
+</div>
+<div><p>test</p></div>
+
+<div class="home-container">
+  <h1 class="page-title">Découvrez nos délicieuses recettes</h1>
+  
+  <div class="recipes-container">
+    @for (recipe of recipes; track recipe.id) {
+      <div class="recipe-card">
+        <div class="recipe-header">
+          <h3 class="recipe-title">{{ recipe.name }}</h3>
+          <i class="favorite-icon fas fa-heart" (click)="addToFavorites(recipe.id)" aria-label="Ajouter aux favoris"></i>
+        </div>
+        <img [src]="recipe.image_url" [alt]="recipe.name" class="recipe-image">
+        <p class="recipe-description">{{ recipe.description }}</p>
+        <div class="recipe-footer">
+          <span class="recipe-time"><i class="fas fa-clock"></i> {{ recipe.prep_time }} min</span>
+          <span class="recipe-difficulty"><i class="fas fa-signal"></i> {{ recipe.category }}</span>
+        </div>
+      </div>
+    }
+    @empty {
+      <p class="no-recipes">Aucune recette disponible pour le moment.</p>
+    }
+  </div>
+
+  <div class="pagination">
+    <!-- Ajoutez ici les contrôles de pagination si nécessaire -->
+  </div>
+</div>

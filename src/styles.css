@@ -1,207 +1,500 @@
 /* Définition des couleurs principales */
 :root {
-    --primary-color: #4CAF50; /* Couleur principale fraîche */
-    --secondary-color: #FFC107; /* Couleur secondaire douce */
-    --background-color: #F4F4F9; /* Fond léger et moderne */
-    --text-color: #333333; /* Couleur du texte sombre pour une bonne lisibilité */
-    --card-bg: #FFFFFF; /* Fond des cartes blanc pour le contraste */
-    --card-shadow: rgba(0, 0, 0, 0.1); /* Ombre douce */
-    --hover-bg: #F1F8E9; /* Couleur de survol pour les éléments interactifs */
-    --border-color: #E0E0E0; /* Couleur de bordure discrète */
-  }
-  
-  /* Styles globaux */
-  body {
-    font-family: 'Roboto', sans-serif; /* Police moderne et élégante */
-    background-color: var(--background-color);
-    margin: 0;
-    padding: 0;
-    color: var(--text-color);
-    line-height: 1.6;
-  }
-  
-  /* Conteneur central */
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  /* En-tête */
-  header {
-    background-color: var(--primary-color);
-    padding: 20px 0;
-    color: white;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 1000;
-  }
-  
-  /* Styles pour la barre de navigation */
-  .navbar {
-    background-color: #ffffff;
-    border-bottom: 1px solid var(--border-color);
-    padding: 1rem 2rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 1000;
-  }
-  
-  .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .navbar-logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--text-color);
-  }
-  
-  .logo-img {
-    height: 40px;
-    margin-right: 10px;
-  }
-  
-  .logo-text {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--primary-color);
-  }
-  
-  .navbar-menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar-item {
-    color: var(--text-color);
-    text-decoration: none;
-    padding: 0.75rem 1rem;
-    font-size: 16px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .navbar-item:hover {
-    background-color: var(--hover-bg);
-    color: var(--primary-color);
-  }
-  
-  /* Styles pour le bouton de connexion */
-  .navbar-button {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-    padding: 0.75rem 1.25rem;
-    border-radius: 20px;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-  }
-  
-  .navbar-button:hover {
-    background-color: #FFC107;
-  }
-  
-  /* Styles pour les cartes de recettes */
-  .card {
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px var(--card-shadow);
-    padding: 20px;
-    margin-bottom: 20px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px var(--card-shadow);
-  }
-  
-  /* Styles pour les formulaires d'authentification */
-  .auth-form {
-    max-width: 400px;
-    width: 90%;
-    margin: 2rem auto;
-    padding: 20px;
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px var(--card-shadow);
-  }
-  
-  .auth-form h2 {
-    text-align: center;
-    color: var(--text-color);
-    margin-bottom: 20px;
-  }
-  
-  .auth-form form {
-    display: flex;
+  --primary-color: #4CAF50;
+  --secondary-color: #FFA000;
+  --background-color: #F5F5F5;
+  --text-color: #333333;
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --border-color: #e0e0e0;
+  --hover-bg: #f5f5f5;
+  --text-color-light: #757575;
+  --primary-color-dark: #3d8b40;
+  --secondary-color-dark: #ff8f00;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  background-color: var(--primary-color);
+  padding: 20px 0;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: var(--secondary-color);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.btn {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #FF8F00;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+footer {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Styles pour la barre de navigation */
+.navbar {
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 0.5rem 1rem;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+}
+
+.logo-img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  color: #333;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-item:hover {
+  color: #ff6b6b;
+}
+
+.navbar-button {
+  background-color: #ff6b6b;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-button:hover {
+  background-color: #ff4757;
+  color: white;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  padding: 0.5rem 0;
+  z-index: 1000;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f8f8f8;
+}
+
+.logout-button {
+  color: #ff6b6b;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  text-decoration: underline;
+}
+
+/* Styles pour la page d'administration */
+.admin-title {
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.admin-nav {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--card-shadow);
+  margin-bottom: 2rem;
+}
+
+.admin-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-menu-item {
+  margin: 0 1rem;
+}
+
+.admin-link {
+  display: block;
+  padding: 1rem 1.5rem;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  border-radius: 4px;
+}
+
+.admin-link:hover,
+.admin-link:focus {
+  color: var(--primary-color);
+  background-color: var(--hover-bg);
+}
+
+.admin-content {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--card-shadow);
+  padding: 2rem;
+}
+
+/* Styles pour les tableaux d'administration */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 4px var(--card-shadow);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table th {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tr:nth-child(even) {
+  background-color: var(--hover-bg);
+}
+
+.admin-table button {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.admin-table button.validate {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.admin-table button.validate:hover {
+  background-color: var(--primary-color-dark);
+}
+
+.admin-table button.view {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.admin-table button.view:hover {
+  background-color: var(--secondary-color-dark);
+}
+
+.admin-table .empty-message {
+  text-align: center;
+  color: var(--text-color-light);
+  font-style: italic;
+}
+
+/* Responsive design pour les tableaux */
+@media (max-width: 768px) {
+  .admin-menu {
     flex-direction: column;
-    align-items: center;
   }
-  
-  .auth-form input {
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+
+  .admin-menu-item {
+    margin: 0.5rem 0;
   }
-  
-  .auth-form input:focus {
-    border-color: var(--primary-color);
-    outline: none;
+
+  .admin-link {
+    text-align: center;
   }
-  
-  /* Bouton de formulaire */
+}
+
+/* Styles pour les formulaires d'authentification */
+.auth-form {
+  max-width: 400px;
+  width: 90%;
+  margin: 2rem auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.auth-form h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.auth-form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-form input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.auth-form button {
+  width: auto;
+  min-width: 120px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #ff6b6b;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.auth-form button:hover {
+  background-color: #ff4757;
+}
+
+.auth-form nav {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.auth-form nav a {
+  color: #ff6b6b;
+  text-decoration: none;
+}
+
+.auth-form nav a:hover {
+  text-decoration: underline;
+}
+
+/* Media query pour les écrans plus petits */
+@media (max-width: 480px) {
+  .auth-form {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .auth-form input,
   .auth-form button {
-    width: auto;
-    min-width: 120px;
-    margin-bottom: 15px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: var(--primary-color);
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 14px;
   }
-  
-  .auth-form button:hover {
-    background-color: #388E3C;
+}
+
+/* Styles pour les cartes de recettes */
+.recipes-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 20px;
+}
+
+.recipe-card {
+  width: calc(33.333% - 20px);
+  max-width: 350px;
+  margin-bottom: 20px;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--card-shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+}
+
+.recipe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: var(--primary-color);
+}
+
+.recipe-title {
+  font-size: 1.2rem;
+  margin: 0;
+  color: white;
+  flex-grow: 1;
+}
+
+.favorite-icon {
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.favorite-icon:hover {
+  color: var(--secondary-color);
+}
+
+.recipe-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.recipe-description {
+  padding: 15px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.recipe-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: var(--hover-bg);
+}
+
+.recipe-time, .recipe-difficulty {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.no-recipes {
+  text-align: center;
+  color: var(--text-color-light);
+  font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .recipe-card {
+    width: calc(50% - 20px);
   }
-  
-  /* Liens dans les formulaires */
-  .auth-form nav {
-    margin-top: 20px;
-    text-align: center;
+}
+
+@media (max-width: 768px) {
+  .recipe-card {
+    width: 100%;
+    max-width: 400px;
   }
-  
-  .auth-form nav a {
-    color: var(--primary-color);
-    text-decoration: none;
-  }
-  
-  .auth-form nav a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Pied de page */
-  footer {
-    background-color: var(--primary-color);
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
+}

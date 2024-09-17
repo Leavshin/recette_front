@@ -1,57 +1,51 @@
 import { Injectable } from '@angular/core';
-import { User } from '../types/user.types'; // Assurez-vous que ce chemin est correct
-import { Observable, of, throwError } from 'rxjs'; // Ajoutez ces imports
+import { HttpClient } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { User } from '../types/user.types';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = environment.apiUrl;
 
-  private readonly usersKey = 'users'; // Clé pour stocker les utilisateurs dans le localStorage
+  constructor(private http: HttpClient) {}
 
-  constructor() {}
-
-  // Méthode pour enregistrer un utilisateur (simule l'ajout dans le localStorage)
-  register(user: Partial<User>): void {
-    const users = this.getUsers();
-    if (!users.find(u => u.email === user.email)) {
-      users.push(user as User);
-      localStorage.setItem(this.usersKey, JSON.stringify(users));
-    } else {
-      console.error('User already exists');
-    }
+  register(user: Partial<User>): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/register`, user).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  // Modifiez cette méthode pour retourner un Observable
-  login(cred: Pick<User, 'email' | 'password'>): Observable<boolean> {
-    const users = this.getUsers();
-    const user = users.find(u => u.email === cred.email && u.password === cred.password);
-    if (user) {
-      localStorage.setItem('token', 'dummy-token');
-      return of(true);
-    } else {
-      return throwError(() => new Error('Identifiants invalides'));
-    }
+  login(credentials: Pick<User, 'email' | 'password'>): Observable<boolean> {
+    return this.http.post<{ token: string }>(`${this.apiUrl}/auth/login`, credentials).pipe(
+      map(response => {
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          return true;
+        }
+        return false;
+      }),
+      catchError(this.handleError)
+    );
   }
 
-  // Méthode pour obtenir le token depuis le localStorage
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  // Méthode pour vérifier si l'utilisateur est connecté
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
 
-  // Méthode privée pour obtenir la liste des utilisateurs depuis le localStorage
-  private getUsers(): User[] {
-    const users = localStorage.getItem(this.usersKey);
-    return users ? JSON.parse(users) : [];
+  logout(): void {
+    localStorage.removeItem('token');
   }
 
-  // Facultatif : Méthode pour déconnecter l'utilisateur
-  logout(): void {
-    localStorage.removeItem('token'); // Supprime le token lors de la déconnexion
+  private handleError(error: any) {
+    console.error('Une erreur s\'est produite', error);
+    return throwError(() => new Error(error.message || 'Erreur du serveur'));
   }
 }
