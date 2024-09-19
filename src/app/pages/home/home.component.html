@@ -7,6 +7,7 @@
         <div class="recipe-header">
           <h3 class="recipe-title">{{ recipe.name }}</h3>
 <!--          <i class="favorite-icon fas fa-heart" (click)="addToFavorites(recipe.id)" aria-label="Ajouter aux favoris"></i>-->
+<button [routerLink]="['/recipe', recipe.id]">Détails</button>
         </div>
         <img [src]="recipe.imageUrl" [alt]="recipe.name" class="recipe-image">
         <p class="recipe-description">{{ recipe.description }}</p>

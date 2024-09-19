@@ -3,11 +3,13 @@ import {CommonModule} from '@angular/common';
 import {UserService} from '../../utils/services/user.service';
 import {RecipeService} from '../../utils/services/recipe.service';
 import {Recipe} from '../../utils/types/recipe.types';
+import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

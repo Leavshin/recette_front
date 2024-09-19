@@ -29,8 +29,6 @@ export class RecipeService {
   }
 
   addRecipe(recipe: Omit<Recipe, 'id'>): Observable<Recipe> {
-    console.log("peut etre recipe")
-    console.log(recipe);
     return this.http.post<Recipe>(`${this.apiUrl}new`, recipe).pipe(
       catchError((err: { message: any; }) => {
         alert(`Error adding recipe: ${err.message}`);
@@ -39,10 +37,15 @@ export class RecipeService {
     );
   }
 
-  // // Obtenir une recette par ID
-  // getRecipeById(id: number): Observable<Recipe> {
-  //   return this.http.get<Recipe>(`${this.apiUrl}${id}`);
-  // }
+  // Obtenir une recette par ID
+  getRecipeById(id: number): Observable<Recipe> {
+    return this.http.get<Recipe>(`${this.apiUrl}${id}`).pipe(
+      catchError((error: { message: any; }) => {
+        alert(error.message);
+        return of();
+      })
+    )
+  }
   //
   // // Mettre à jour une recette existante
   // updateRecipe(id: number, updatedRecipe: Recipe): void {
