@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../types/user.types';
 import { Recipe } from '../types/recipe.types';
+import { Ingredient } from '../types/ingredient.types';
+import { Inventory } from '../types/inventory.types';
 
 @Injectable({
   providedIn: 'root'
@@ -32,4 +34,10 @@ export class UserService {
   removeFavoriteRecipe(userId: number, recipeId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/users/${userId}/favorite-recipes/${recipeId}`);
   }
+
+  addIngredient(inventoryItems: Inventory[]): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/user/addIngredients`, inventoryItems);
+  }
+
+
 }

@@ -5,7 +5,6 @@ import {RecipeService} from '../../utils/services/recipe.service';
 import {Recipe} from '../../utils/types/recipe.types';
 import { RouterLink } from '@angular/router';
 
-
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -19,22 +18,17 @@ export class HomeComponent implements OnInit {
   constructor(
     private userService: UserService,
     private recipeService: RecipeService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.getRecipes()
+ this.loadRecipes()
   }
 
-  getRecipes(): void {
-    this.recipeService.getAllRecipe().subscribe((data: Recipe[]) => {
-      this.recipes = data;
-    })
+  loadRecipes() {
+    this.recipeService.getAllRecipe().subscribe({
+      next: (recipes) => this.recipes = recipes,
+      error: (error) => console.error('Error loading recipes', error)
+    });
   }
 
-  // loadRecipes() {
-  //   this.recipeService.getRecipes().subscribe({
-  //     next: (recipes) => this.recipes = recipes,
-  //     error: (error) => console.error('Error loading recipes', error)
-  //   });
-  }
+}
