@@ -1,9 +1,13 @@
+// @ts-ignore
 import { Injectable } from '@angular/core';
+// @ts-ignore
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+// @ts-ignore
+import { catchError, Observable, BehaviorSubject, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Ingredient } from '../types/ingredient.types';
 
+// @ts-ignore
 @Injectable({
   providedIn: 'root'
 })
@@ -18,9 +22,18 @@ export class IngredientService {
   // Charger les ingrédients initiaux
   private loadInitialIngredients(): void {
     this.http.get<Ingredient[]>(`${this.apiUrl}list`).subscribe({
-      next: (ingredients) => this.ingredients.next(ingredients),
-      error: (error) => console.error('Error loading initial ingredients', error)
+      next: (ingredients: any) => this.ingredients.next(ingredients),
+      error: (error: any) => console.error('Error loading initial ingredients', error)
     });
+  }
+
+  getAllIngredients(): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>(`${this.apiUrl}list`).pipe(
+      catchError((error: { message: any; }) => {
+        alert(error.message);
+        return of();
+      })
+    )
   }
 
   // Récupérer tous les ingrédients en tant qu'Observable
@@ -37,11 +50,11 @@ export class IngredientService {
   addIngredient(ingredient: Ingredient): void {
     const newIngredient = { ...ingredient, id: this.generateId() }; // Générer un ID temporaire
     this.http.post<Ingredient>(`${this.apiUrl}new`, newIngredient).subscribe({
-      next: (createdIngredient) => {
+      next: (createdIngredient: any) => {
         const currentIngredients = this.ingredients.value;
         this.ingredients.next([...currentIngredients, createdIngredient]); // Ajouter le nouvel ingrédient
       },
-      error: (error) => console.error('Error adding ingredient', error)
+      error: (error: any) => console.error('Error adding ingredient', error)
     });
   }
 
@@ -53,13 +66,13 @@ export class IngredientService {
   // Mettre à jour un ingrédient existant
   updateIngredient(id: string, updatedIngredient: Ingredient): void {
     this.http.put<Ingredient>(`${this.apiUrl}update/${id}`, updatedIngredient).subscribe({
-      next: (responseIngredient) => {
-        const currentIngredients = this.ingredients.value.map(ingredient => 
+      next: (responseIngredient: any) => {
+        const currentIngredients = this.ingredients.value.map((ingredient: { id: string; }) =>
           ingredient.id === id ? responseIngredient : ingredient
         );
         this.ingredients.next(currentIngredients); // Mettre à jour localement
       },
-      error: (error) => console.error('Error updating ingredient', error)
+      error: (error: any) => console.error('Error updating ingredient', error)
     });
   }
 
@@ -67,10 +80,10 @@ export class IngredientService {
   deleteIngredient(id: string): void {
     this.http.delete(`${this.apiUrl}delete/${id}`).subscribe({
       next: () => {
-        const currentIngredients = this.ingredients.value.filter(ingredient => ingredient.id !== id);
+        const currentIngredients = this.ingredients.value.filter((ingredient: { id: string; }) => ingredient.id !== id);
         this.ingredients.next(currentIngredients); // Mettre à jour localement
       },
-      error: (error) => console.error('Error deleting ingredient', error)
+      error: (error: any) => console.error('Error deleting ingredient', error)
     });
   }
 

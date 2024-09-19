@@ -1,6 +1,8 @@
+import {Recipe} from "./recipe.types";
+
 export type Instruction = {
     id: number;
-    id_recette: number;
-    steps: string[];
+    recipe: Recipe;
+    step: number;
     description: string;
 }
