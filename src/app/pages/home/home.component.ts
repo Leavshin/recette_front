@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {UserService} from '../../utils/services/user.service';
-import {RecipeService} from '../../utils/services/recipe.service';
-import {Recipe} from '../../utils/types/recipe.types';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { UserService } from '../../utils/services/user.service';
+import { RecipeService } from '../../utils/services/recipe.service';
+import { Recipe } from '../../utils/types/recipe.types';
 
 @Component({
   selector: 'app-home',
@@ -17,22 +17,30 @@ export class HomeComponent implements OnInit {
   constructor(
     private userService: UserService,
     private recipeService: RecipeService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.getRecipes()
+ this.loadRecipes()
   }
 
-  getRecipes(): void {
-    this.recipeService.getAllRecipe().subscribe((data: Recipe[]) => {
-      this.recipes = data;
-    })
+  loadRecipes() {
+    this.recipeService.getAllRecipe().subscribe({
+      next: (recipes) => this.recipes = recipes,
+      error: (error) => console.error('Error loading recipes', error)
+    });
   }
 
-  // loadRecipes() {
-  //   this.recipeService.getRecipes().subscribe({
-  //     next: (recipes) => this.recipes = recipes,
-  //     error: (error) => console.error('Error loading recipes', error)
+  // addToFavorites(recipeId: number): void {
+  //   const userId = 1;
+  //   this.userService.addFavoriteRecipe(userId, recipeId).subscribe({
+  //     next: () => {
+  //       console.log(`Recipe ${recipeId} added to favorites`);
+
+  //     },
+  //     error: (error) => {
+  //       console.error('Error adding recipe to favorites', error);
+
+  //     }
   //   });
-  }
+  // }
+}
