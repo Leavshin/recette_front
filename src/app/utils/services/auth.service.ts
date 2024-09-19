@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from '../types/user.types';
 import { environment } from '../../../environments/environment';
@@ -11,7 +11,16 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  user: Partial<User> = {
+    email: '',
+    admin: false
+  }
+
+  userChange$: BehaviorSubject<Partial<User>> = new BehaviorSubject(this.user)
+
+  constructor(private http: HttpClient) {
+    this.userChange$.subscribe(change => this.user = change);
+  }
 
   register(user: Partial<User>): Observable<boolean> {
     return this.http.post<boolean>(`${this.apiUrl}/auth/register`, user).pipe(
@@ -25,6 +34,7 @@ export class AuthService {
         if (response) {
           localStorage.setItem('token', response.email);
           localStorage.setItem('isAdmin', JSON.stringify(response.admin));
+          this.userChange$.next(response)
           return true;
         }
         return false;
@@ -33,21 +43,21 @@ export class AuthService {
     );
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  getUserInfo(): void {
+    this.userChange$.next({
+      admin: localStorage.getItem('isAdmin') === 'true',
+      email: localStorage.getItem('token') ?? ''
+    });
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
 
   logout(): void {
     localStorage.removeItem('token');
-  }
-
-  isAdmin(): boolean {
-    let isAdmin: boolean = JSON.parse(<string>localStorage.getItem('isAdmin'));
-    return isAdmin;
+    localStorage.removeItem('isAdmin');
+    this.userChange$.next({
+      email: '',
+      admin: false
+    })
   }
 
   private handleError(error: any) {
