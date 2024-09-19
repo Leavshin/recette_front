@@ -1,4 +1,5 @@
 import {IngredientRecipe} from "./ingredientRecipe";
+import {Instruction} from "./instruction.types";
 
 export type Recipe = {
     id: number;
@@ -10,4 +11,5 @@ export type Recipe = {
     portion: number;
     category: string;
     ingredients: IngredientRecipe[];
+    instructions: Instruction[];
 }

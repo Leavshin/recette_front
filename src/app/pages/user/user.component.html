@@ -1,26 +1,26 @@
 <div class="user-profile">
   <h2>Mon Profil</h2>
 
-  <section class="favorite-recipes">
-    <h3>Mes Recettes Favorites</h3>
-    @if (favoriteRecipes.length > 0) {
-      <ul class="recipe-list">
-        @for (recipe of favoriteRecipes; track recipe.id) {
-          <li class="recipe-item">
-            <div class="recipe-card">
-              <h4>{{ recipe.name }}</h4>
-              @if (recipe.image_url) {
-                <img [src]="recipe.image_url" [alt]="recipe.name" class="recipe-image">
-              }
-              <p>{{ recipe.description }}</p>
-              <button class="btn view-recipe" (click)="viewRecipe(recipe.id)">Voir la recette</button>
-              <button class="btn remove-favorite" (click)="removeFavorite(recipe.id)">Retirer des favoris</button>
-            </div>
-          </li>
-        }
-      </ul>
-    } @else {
-      <p class="no-favorites">Vous n'avez pas encore de recettes favorites.</p>
-    }
-  </section>
+<!--  <section class="favorite-recipes">-->
+<!--    <h3>Mes Recettes Favorites</h3>-->
+<!--    @if (favoriteRecipes.length > 0) {-->
+<!--      <ul class="recipe-list">-->
+<!--        @for (recipe of favoriteRecipes; track recipe.id) {-->
+<!--          <li class="recipe-item">-->
+<!--            <div class="recipe-card">-->
+<!--              <h4>{{ recipe.name }}</h4>-->
+<!--              @if (recipe.imageUrl) {-->
+<!--                <img [src]="recipe.imageUrl" [alt]="recipe.name" class="recipe-image">-->
+<!--              }-->
+<!--              <p>{{ recipe.description }}</p>-->
+<!--              <button class="btn view-recipe" (click)="viewRecipe(recipe.id)">Voir la recette</button>-->
+<!--              <button class="btn remove-favorite" (click)="removeFavorite(recipe.id)">Retirer des favoris</button>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--        }-->
+<!--      </ul>-->
+<!--    } @else {-->
+<!--      <p class="no-favorites">Vous n'avez pas encore de recettes favorites.</p>-->
+<!--    }-->
+<!--  </section>-->
 </div>
