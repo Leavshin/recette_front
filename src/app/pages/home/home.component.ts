@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UserService } from '../../utils/services/user.service';
-import { RecipeService } from '../../utils/services/recipe.service';
-import { Recipe } from '../../utils/types/recipe.types';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {UserService} from '../../utils/services/user.service';
+import {RecipeService} from '../../utils/services/recipe.service';
+import {Recipe} from '../../utils/types/recipe.types';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -30,17 +31,4 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  // addToFavorites(recipeId: number): void {
-  //   const userId = 1;
-  //   this.userService.addFavoriteRecipe(userId, recipeId).subscribe({
-  //     next: () => {
-  //       console.log(`Recipe ${recipeId} added to favorites`);
-
-  //     },
-  //     error: (error) => {
-  //       console.error('Error adding recipe to favorites', error);
-
-  //     }
-  //   });
-  // }
 }
