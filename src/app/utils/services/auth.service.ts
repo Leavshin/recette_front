@@ -13,17 +13,18 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  register(user: Partial<User>): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/register`, user).pipe(
+  register(user: Partial<User>): Observable<boolean> {
+    return this.http.post<boolean>(`${this.apiUrl}/auth/register`, user).pipe(
       catchError(this.handleError)
     );
   }
 
   login(credentials: Pick<User, 'email' | 'password'>): Observable<boolean> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/auth/login`, credentials).pipe(
+    return this.http.post<User>(`${this.apiUrl}/auth/login`, credentials).pipe(
       map(response => {
-        if (response && response.token) {
-          localStorage.setItem('token', response.token);
+        if (response) {
+          localStorage.setItem('token', response.email);
+          localStorage.setItem('isAdmin', JSON.stringify(response.admin));
           return true;
         }
         return false;
@@ -42,6 +43,11 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+  }
+
+  isAdmin(): boolean {
+    let isAdmin: boolean = JSON.parse(<string>localStorage.getItem('isAdmin'));
+    return isAdmin;
   }
 
   private handleError(error: any) {

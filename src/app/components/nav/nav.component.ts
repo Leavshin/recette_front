@@ -15,6 +15,7 @@ import { HomeComponent } from "../../pages/home/home.component";
 })
 export class NavComponent {
   isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(private authService: AuthService) {
     this.updateLoginStatus();
@@ -22,6 +23,7 @@ export class NavComponent {
 
   updateLoginStatus() {
     this.isLoggedIn = this.authService.isLoggedIn();
+    this.isAdmin = this.authService.isAdmin();
   }
 
   logout() {
