@@ -6,5 +6,4 @@ export type Inventory={
   quantity: number;
   ingredient: Ingredient;
   account: User;
-
 }

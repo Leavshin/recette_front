@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormGroup, FormArray, Validators, ReactiveFormsModule, FormControl} from '@angular/forms';
 import { Ingredient } from '../../utils/types/ingredient.types';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../environments/environment';
 import { IngredientService } from '../../utils/services/ingredient.service';
 import { UserService } from '../../utils/services/user.service';
 import { Inventory } from '../../utils/types/inventory.types';
+import {User} from "../../utils/types/user.types";
+import {AuthService} from "../../utils/services/auth.service";
+import {Recipe} from "../../utils/types/recipe.types";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-inventory',
@@ -15,37 +17,63 @@ import { Inventory } from '../../utils/types/inventory.types';
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
-export class InventoryComponent implements OnInit {
+export class InventoryComponent implements OnInit, OnDestroy {
 
-  inventoryForm!: FormGroup;
+  user$?: Subscription;
+  user: User = {inventories: [], email: "toto@test", id: 6, name: "tototest"};
+
+  inventoryForm = new FormGroup({
+      ingredients: new FormArray([
+        new FormGroup({
+          ingredient: new FormControl(),
+          quantity: new FormControl(1, [Validators.required])
+        }),
+      ])
+    });
   ingredientsList: Ingredient[] = [];
 
-
   constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
     private ingredientService: IngredientService,
-    private userService: UserService) {}
+    private userService: UserService,
+    private authService: AuthService) {}
 
   ngOnInit() {
-    this.inventoryForm = this.fb.group({
-      inventoryItems: this.fb.array([]),
-    });
+    this.authService.getUserInfo();
+    if(this.authService.user.id) {
+       this.user$ = this.userService.getUserById(this.authService.user.id).subscribe((data: User) => {
+        this.user = data;
+        this.getIngredients();
+        this.initIngredientForm();
+      });
+    }
+    console.log(this.user);
 
-    this.getIngredients();
   }
 
-  get inventoryItems(): FormArray {
-    return this.inventoryForm.get('inventoryItems') as FormArray;
+  ngOnDestroy() {
+    if(this.user$ !== undefined) {
+      this.user$.unsubscribe();
+    }
+
   }
 
-  addInventoryItem() {
-    const inventoryItem = this.fb.group({
-      ingredient: [null, Validators.required],
-      quantity: [1, [Validators.required, Validators.min(1)]],
-    });
+  addIngredient(){
+    this.ingredients.push(new FormGroup({
+      ingredient: new FormControl('', [Validators.required]),
+      quantity: new FormControl(1, [Validators.required]),
+    }))
+  }
 
-    this.inventoryItems.push(inventoryItem);
+  initIngredientForm() {
+    for(let inventory of this.user.inventories) {
+      console.log(inventory.ingredient.name);
+      // let ingredientControl = new FormControl(inventory.ingredient, [Validators.required])
+      // ingredientControl.setValue(JSON.stringify(inventory.ingredient));
+      this.ingredients.push(new FormGroup({
+        ingredient: new FormControl(inventory.ingredient, [Validators.required]),
+        quantity: new FormControl(inventory.quantity, [Validators.required]),
+      }))
+    }
   }
 
   getIngredients() {
@@ -54,11 +82,19 @@ export class InventoryComponent implements OnInit {
     });
   }
 
+  get ingredients() {
+    return this.inventoryForm.controls.ingredients;
+  }
+
   onSubmit() {
     if (this.inventoryForm.valid) {
-      this.userService.addIngredient(this.inventoryForm.value as Inventory[]);
+      let userInventory: Inventory[] = this.ingredients.value as Inventory[];
+      for(let inventory of userInventory){
+        inventory.account = this.user;
+      }
+      this.userService.addIngredient(userInventory).subscribe();
     } else {
-      alert("Formulaire invalid");
+      alert("Formulaire invalide");
     }
   }
 }
