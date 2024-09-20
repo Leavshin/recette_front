@@ -11,32 +11,39 @@ import { Inventory } from '../types/inventory.types';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl + '/user/';
 
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiUrl}/users`);
+    console.log()
+    return this.http.get<User[]>(`${this.apiUrl}list`);
   }
 
   updateUser(id: number, user: User): Observable<User> {
-    return this.http.put<User>(`${environment.apiUrl}/users/${id}`, user);
+    return this.http.put<User>(`${this.apiUrl}${id}`, user);
+  }
+
+  deleteUser(id: number): void {
+    this.http.get(`${this.apiUrl}delete/${id}`).subscribe({
+      error: (error: any) => console.error('Error deleting recipe', error)
+    });
   }
 
   getFavoriteRecipes(userId: number): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.apiUrl}/users/${userId}/favorite-recipes`);
+    return this.http.get<Recipe[]>(`${this.apiUrl}${userId}/favorite-recipes`);
   }
 
   addFavoriteRecipe(userId: number, recipeId: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/users/${userId}/favorite-recipes`, { recipeId });
+    return this.http.post<void>(`${this.apiUrl}${userId}/favorite-recipes`, { recipeId });
   }
 
   removeFavoriteRecipe(userId: number, recipeId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/users/${userId}/favorite-recipes/${recipeId}`);
+    return this.http.delete<void>(`${this.apiUrl}${userId}/favorite-recipes/${recipeId}`);
   }
 
   addIngredient(inventoryItems: Inventory[]): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/user/addIngredients`, inventoryItems);
+    return this.http.post<void>(`${this.apiUrl}addIngredients`, inventoryItems);
   }
 
 

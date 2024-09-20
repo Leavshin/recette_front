@@ -32,6 +32,7 @@ export class AdminUserComponent implements OnInit {
 
   deleteUser(id: number): void {
     console.log(`Deleting user with id: ${id}`);
-    this.loadUsers();
+    this.userService.deleteUser(id);
+    // this.loadUsers();
   }
 }
