@@ -22,6 +22,7 @@ export class RecipesComponent implements OnInit{
 
   id = 0;
   recipe: Recipe | undefined = undefined;
+
   ngOnInit(){
     this.route.params.subscribe(params => {
       this.id = +params['id'];
@@ -35,19 +36,6 @@ export class RecipesComponent implements OnInit{
     })
   }
 
-  // addToFavorites(recipeId: string): void {
-  //   const userId = 'current-user-id'; // À remplacer par la vraie logique d'obtention de l'ID utilisateur
-  //   this.userService.addFavoriteRecipe(userId, recipeId).subscribe({
-  //     next: () => {
-  //       console.log(`Recipe ${recipeId} added to favorites`);
-  //       // Ajouter ici une notification à l'utilisateur
-  //     },
-  //     error: (error) => {
-  //       console.error('Error adding recipe to favorites', error);
-  //       // Ajouter ici une gestion d'erreur pour l'utilisateur
-  //     }
-  //   });
-  // }
 
 
 }

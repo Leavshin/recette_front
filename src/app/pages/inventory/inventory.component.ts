@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Ingredient } from '../../utils/types/ingredient.types';
 import { CommonModule } from '@angular/common';
@@ -7,18 +7,30 @@ import { environment } from '../../../environments/environment';
 import { IngredientService } from '../../utils/services/ingredient.service';
 import { UserService } from '../../utils/services/user.service';
 import { Inventory } from '../../utils/types/inventory.types';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,RouterLink],
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
 export class InventoryComponent implements OnInit {
 
-  inventoryForm!: FormGroup;
+
+  inventoryForm = new FormGroup({
+    ingredients: new FormArray([
+      new FormGroup({
+        ingredient: new FormControl(),
+        quantity: new FormControl(1, [Validators.required]),
+      }),
+    ])
+  });
+
+
   ingredientsList: Ingredient[] = [];
+
 
 
   constructor(
@@ -28,15 +40,12 @@ export class InventoryComponent implements OnInit {
     private userService: UserService) {}
 
   ngOnInit() {
-    this.inventoryForm = this.fb.group({
-      inventoryItems: this.fb.array([]),
-    });
 
     this.getIngredients();
   }
 
-  get inventoryItems(): FormArray {
-    return this.inventoryForm.get('inventoryItems') as FormArray;
+  get ingredients(): FormArray {
+    return this.inventoryForm.controls.ingredients;
   }
 
   addInventoryItem() {
@@ -45,8 +54,12 @@ export class InventoryComponent implements OnInit {
       quantity: [1, [Validators.required, Validators.min(1)]],
     });
 
-    this.inventoryItems.push(inventoryItem);
+    this.ingredients.push(inventoryItem);
   }
+
+
+
+
 
   getIngredients() {
     this.ingredientService.getAllIngredients().subscribe((data: Ingredient[]) => {

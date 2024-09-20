@@ -29,6 +29,7 @@ export class RegisterComponent {
     }
 
     this.authService.register({ email: this.email, password: this.password });
+
     this.router.navigate(['/auth/login']);
   }
 }
