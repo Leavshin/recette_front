@@ -13,7 +13,7 @@ import {Recipe} from "../../utils/types/recipe.types";
   templateUrl: './recipes.component.html',
   styleUrl: './recipes.component.css'
 })
-export class RecipesComponent implements OnInit{
+export class RecipesComponent implements OnInit {
 
   private route = inject(ActivatedRoute);
 
@@ -21,19 +21,60 @@ export class RecipesComponent implements OnInit{
   }
 
   id = 0;
-  recipe: Recipe | undefined = undefined;
-  ngOnInit(){
+  calories = 0;
+  recipe: Recipe | undefined;
+
+  ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = +params['id'];
     })
     this.getRecipeById();
+    setTimeout(() => {
+      if (this.recipe) {
+        this.getCalories();
+      }
+    }, 1000);
   }
 
-  getRecipeById(){
+  getRecipeById() {
     this.recipeService.getRecipeById(this.id).subscribe((data: Recipe) => {
       this.recipe = data;
     })
   }
+
+  getCalories() {
+    if (this.recipe) {
+      for (let ingredient in this.recipe.ingredients) {
+        this.calories += this.recipe.ingredients[ingredient].ingredient.calorie * this.recipe.ingredients[ingredient].quantity;
+      }
+      this.calories = this.calories / this.recipe.portion;
+    }
+  }
+
+  addPortion() {
+    if (this.recipe) {
+      let oldPortion = this.recipe.portion;
+      this.recipe.portion++;
+      for (let ingredient in this.recipe.ingredients) {
+        this.recipe.ingredients[ingredient].quantity = this.recipe.portion * this.recipe.ingredients[ingredient].quantity / oldPortion;
+      }
+      this.calories = this.calories / oldPortion * this.recipe.portion;
+    }
+  }
+
+  removePortion() {
+    if (this.recipe) {
+      if (this.recipe.portion > 1) {
+        let oldPortion = this.recipe.portion;
+        this.recipe.portion--;
+        for (let ingredient in this.recipe.ingredients) {
+          this.recipe.ingredients[ingredient].quantity = this.recipe.portion * this.recipe.ingredients[ingredient].quantity / oldPortion;
+        }
+        this.calories = this.calories / oldPortion * this.recipe.portion;
+      }
+    }
+  }
+
 
   // addToFavorites(recipeId: string): void {
   //   const userId = 'current-user-id'; // À remplacer par la vraie logique d'obtention de l'ID utilisateur
@@ -48,6 +89,4 @@ export class RecipesComponent implements OnInit{
   //     }
   //   });
   // }
-
-
 }
