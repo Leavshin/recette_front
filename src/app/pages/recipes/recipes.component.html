@@ -3,12 +3,15 @@
 <p>Description : {{recipe?.description}}</p>
 <p>Catégorie : {{recipe?.category}}</p>
 <p>Nombre de personne : {{recipe?.portion}}</p>
+<button type="button" (click)="addPortion()"> + </button>
+<button type="button" (click)="removePortion()"> - </button>
 <p>Temps de préparation : {{recipe?.prepTime}}</p>
 <p>Temps de cuisson : {{recipe?.cookTime}}</p>
+<p>Calories par portion : {{calories | number:'1.0-0'}}</p>
 <hr>
 <p>Ingredients : </p>
 @for(ingredient of recipe.ingredients; track ingredient){
-<p>{{ingredient.ingredient.name}} Quantité : {{ingredient.quantity}}</p>
+<p>{{ingredient.ingredient.name}} Quantité : {{ingredient.quantity | number:'1.0-0'}} grammes</p>
 }
 <hr>
 <p>Instructions : </p>
