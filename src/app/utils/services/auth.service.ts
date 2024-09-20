@@ -12,13 +12,19 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
 
   user: Partial<User> = {
+    id: -1,
     email: '',
     admin: false
   }
 
-  userChange$: BehaviorSubject<Partial<User>> = new BehaviorSubject(this.user)
+  userChange$: BehaviorSubject<Partial<User>>;
 
   constructor(private http: HttpClient) {
+    let userStorage = localStorage.getItem('user');
+    if (userStorage) {
+      this.user = JSON.parse(userStorage);
+    }
+    this.userChange$ = new BehaviorSubject(this.user);
     this.userChange$.subscribe(change => this.user = change);
   }
 
@@ -32,9 +38,13 @@ export class AuthService {
     return this.http.post<User>(`${this.apiUrl}/auth/login`, credentials).pipe(
       map(response => {
         if (response) {
-          localStorage.setItem('token', response.email);
-          localStorage.setItem('isAdmin', JSON.stringify(response.admin));
-          this.userChange$.next(response)
+          this.user = {
+            id: response.id,
+            email: response.email,
+            admin: response.admin
+          }
+          localStorage.setItem('user', JSON.stringify(this.user));
+          this.userChange$.next(this.user)
           return true;
         }
         return false;
@@ -44,17 +54,14 @@ export class AuthService {
   }
 
   getUserInfo(): void {
-    this.userChange$.next({
-      admin: localStorage.getItem('isAdmin') === 'true',
-      email: localStorage.getItem('token') ?? ''
-    });
+    this.userChange$.next(this.user);
   }
 
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('user');
     this.userChange$.next({
+      id: -1,
       email: '',
       admin: false
     })
