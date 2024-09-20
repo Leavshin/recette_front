@@ -11,16 +11,18 @@
       </form>
     </div>
     <div class="results">
-      
+
     </div> -->
     <ul class="navbar-menu">
       <li><a routerLink="/" class="navbar-item">Accueil</a></li>
-      <li><a routerLink="/admin" class="navbar-item">Admin</a></li>
       <li><a routerLink="/user" class="navbar-item">Compte</a></li>
-      @if (!isLoggedIn) {
+      @if (userInfo.admin) {
+        <li><a routerLink="/admin" class="navbar-item">Admin</a></li>
+      }
+      @if (!userInfo.email) {
         <li><a routerLink="/auth/login" class="navbar-item navbar-button">Connexion</a></li>
       }
-      @if (isLoggedIn) {
+      @if (userInfo.email) {
         <li><a routerLink="/favoris" class="navbar-item">Favoris</a></li>
         <li class="dropdown">
           <a class="navbar-item dropdown-toggle">Mon Compte</a>

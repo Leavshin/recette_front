@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../utils/services/auth.service';
+import {catchError} from "rxjs/operators";
+import {EMPTY} from "rxjs";
 
 @Component({
   selector: 'app-register',
@@ -28,7 +30,22 @@ export class RegisterComponent {
       return;
     }
 
-    this.authService.register({ email: this.email, password: this.password });
-    this.router.navigate(['/auth/login']);
+    this.authService.register({ email: this.email, password: this.password }).pipe(
+      catchError((error) => {
+        console.error("Échec de l'inscription", error);
+        return EMPTY;
+      })
+    ).subscribe({
+      next: (isValid) => {
+        if(isValid) {
+          this.router.navigate(['/auth/login']);
+        } else {
+          alert("Votre email est déjà utilisé");
+        }
+      },
+      error: (err) => {
+        console.error('Erreur inattendue', err);
+      }
+    });
   }
 }
