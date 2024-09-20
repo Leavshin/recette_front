@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../types/user.types';
 import { Recipe } from '../types/recipe.types';
-import { Ingredient } from '../types/ingredient.types';
 import { Inventory } from '../types/inventory.types';
 
 @Injectable({
@@ -16,28 +15,30 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiUrl}/users`);
+    return this.http.get<User[]>(`${this.apiUrl}/user`);
+  }
+
+  getUser(userId: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/user/${userId}`);
   }
 
   updateUser(id: number, user: User): Observable<User> {
-    return this.http.put<User>(`${environment.apiUrl}/users/${id}`, user);
+    return this.http.put<User>(`${this.apiUrl}/user/${id}`, user);
   }
 
   getFavoriteRecipes(userId: number): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.apiUrl}/users/${userId}/favorite-recipes`);
+    return this.http.get<Recipe[]>(`${this.apiUrl}/user/${userId}/favorite-recipes`);
   }
 
   addFavoriteRecipe(userId: number, recipeId: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/users/${userId}/favorite-recipes`, { recipeId });
+    return this.http.post<void>(`${this.apiUrl}/user/${userId}/favorite-recipes`, { recipeId });
   }
 
   removeFavoriteRecipe(userId: number, recipeId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/users/${userId}/favorite-recipes/${recipeId}`);
+    return this.http.delete<void>(`${this.apiUrl}/user/${userId}/favorite-recipes/${recipeId}`);
   }
 
   addIngredient(inventoryItems: Inventory[]): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/user/addIngredients`, inventoryItems);
   }
-
-
 }
