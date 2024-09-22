@@ -32,8 +32,12 @@ export class LoginComponent {
         return EMPTY;
       })
     ).subscribe({
-      next: () => {
-        this.router.navigate(['']);
+      next: (isValid) => {
+        if(isValid) {
+          this.router.navigate(['']);
+        } else {
+          alert("Votre email ou mot de passe est incorrect");
+        }
       },
       error: (err) => {
         console.error('Erreur inattendue', err);
