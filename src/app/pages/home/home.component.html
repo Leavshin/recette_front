@@ -1,0 +1,28 @@
+<div class="home-container">
+  <h1 class="page-title">Découvrez nos délicieuses recettes</h1>
+
+  <div class="recipes-container">
+    @for (recipe of recipes; track recipe.id) {
+      <div class="recipe-card">
+        <div class="recipe-header">
+          <h3 class="recipe-title">{{ recipe.name }}</h3>
+<!--          <i class="favorite-icon fas fa-heart" (click)="addToFavorites(recipe.id)" aria-label="Ajouter aux favoris"></i>-->
+<button [routerLink]="['/recipe', recipe.id]">Détails</button>
+        </div>
+        <img [src]="recipe.imageUrl" [alt]="recipe.name" class="recipe-image">
+        <p class="recipe-description">{{ recipe.description }}</p>
+        <div class="recipe-footer">
+          <span class="recipe-time"><i class="fas fa-clock"></i> {{ recipe.prepTime }} min</span>
+          <span class="recipe-difficulty"><i class="fas fa-signal"></i> {{ recipe.category }}</span>
+        </div>
+      </div>
+    }
+    @empty {
+      <p class="no-recipes">Aucune recette disponible pour le moment.</p>
+    }
+  </div>
+
+  <div class="pagination">
+    <!-- Ajoutez ici les contrôles de pagination si nécessaire -->
+  </div>
+</div>

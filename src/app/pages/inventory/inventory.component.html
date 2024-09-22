@@ -1,0 +1,57 @@
+
+<div class="container">
+  <div class="admin-content">
+    <form class="admin-content" [formGroup]="inventoryForm" (ngSubmit)="onSubmit()">
+      <h2>Ajoutez les ingrédients que vous possédez !</h2>
+      <fieldset formArrayName="ingredients" class="inventory">
+        <legend>Ingredients</legend>
+        @for(control of ingredients.controls; track control){
+          <fieldset formGroupName="{{$index}}">
+            <legend>Ingredient {{$index +1}}</legend>
+            <label [for]="'ingredient' + $index">Choisir un ingredient:</label>
+            <select [id]="'ingredient' + $index" formControlName="ingredient">
+              @for(ing of ingredientsList; track ing){
+                <option [ngValue]="ing">{{ ing.name }}</option>
+              }
+            </select>
+            <div>
+              <label [for]="'quantity' + $index">Quantité :</label>
+              <input type="number" [id]="'quantity' + $index" name="quantity" formControlName="quantity" required>
+            </div>
+          </fieldset>
+        }
+        <button class="btn" type="button" (click)="addIngredient()">Ajouter un ingredient</button>
+      </fieldset>
+      <button class="btn">Sauvegarder</button>
+    </form>
+  </div>
+  <hr>
+  <div class="admin-content">
+    <h2>Liste des ingrédients dans votre inventaire :</h2>
+    @if(user.inventories.length > 0) {
+      <table class="admin-table">
+        <thead>
+        <tr>
+          <th scope="col">Nom de l'ingrédient</th>
+          <th scope="col">Quantité</th>
+          <th scope="col">Unité</th>
+          <th scope="col">Calories</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (inv of user.inventories; track inv) {
+            <tr>
+              <td>{{ inv.ingredient.name }}</td>
+              <td>{{ inv.quantity }}</td>
+              <td>{{ inv.ingredient.unit }}</td>
+              <td>{{ inv.ingredient.calorie * inv.quantity }}</td>
+              <td><button class="btn" type="button">Supprimer</button></td>
+            </tr>
+          }
+      </table>
+    } @else {
+      <p>Aucun ingrédient dans l'inventaire</p>
+    }
+  </div>
+</div>

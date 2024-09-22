@@ -1,0 +1,18 @@
+<div class="auth-form">
+  <h2>Connexion</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <input type="email" [(ngModel)]="email" name="email" id="email" placeholder="Email" required>
+    </div>
+    <div>
+      <input type="password" [(ngModel)]="password" name="password" id="password" placeholder="Mot de passe" required> 
+    </div>
+    <button type="submit">Se connecter</button>
+  </form>
+  
+  <nav>
+    <p>Pas encore de compte ? <a routerLink="/auth/register">S'inscrire</a></p>
+  </nav>
+</div>
+
+<router-outlet></router-outlet>

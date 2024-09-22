@@ -1,0 +1,106 @@
+<p>Nos Recettes</p>
+
+<div class="recipe-form">
+  <h2>Créer une nouvelle recette</h2>
+  <form [formGroup]="recipeForm" (ngSubmit)="addRecipe()">
+    <div>
+      <label for="name">Nom :</label>
+      <input type="text" id="name" name="name" formControlName="name" required>
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" formControlName="description"></textarea>
+    </div>
+    <div>
+      <label for="portion">Nombre de personnes :</label>
+      <input type="number" id="portion" name="portion" formControlName="portion" required>
+    </div>
+    <div>
+      <label for="imageUrl">URL de l'image :</label>
+      <input type="text" id="imageUrl" name="imageUrl" formControlName="imageUrl">
+    </div>
+    <div>
+      <label for="prepTime">Temps de préparation :</label>
+      <input type="text" id="prepTime" name="prepTime" formControlName="prepTime" required>
+    </div>
+    <div>
+      <label for="cookTime">Temps de cuisson :</label>
+      <input type="text" id="cookTime" name="cookTime" formControlName="cookTime" required>
+    </div>
+    <div>
+      <label for="category">Choisir une catégorie:</label>
+      <select id="category" formControlName="category">
+        @for(category of recipe_categories; track category){
+        <option [value]="category">{{category}}</option>
+        }
+      </select>
+
+      <fieldset formArrayName="ingredients">
+        <legend>Ingredients</legend>
+        @for(control of ingredients.controls; track control){
+        <fieldset formGroupName="{{$index}}">
+        <legend>Ingredient {{$index +1}}</legend>
+        <label [for]="'ingredient' + $index">Choisir un ingredient:</label>
+        <select [id]="'ingredient' + $index" formControlName="ingredient">
+          @for(ing of ingredientsList; track ing){
+        <option [ngValue]="ing">{{ ing.name }}</option>
+        }
+        </select>
+        <div>
+      <label [for]="'quantity' + $index">Quantité :</label>
+      <input type="number" [id]="'quantity' + $index" name="quantity" formControlName="quantity" required>
+      </div>
+      </fieldset>
+        }
+        <button type="button" (click)="addIngredient()">Ajouter un ingredient</button>
+      </fieldset>
+
+      <fieldset formArrayName="instructions">
+        <legend>Instructions</legend>
+        @for(instruction of instructions.controls; track instruction){
+        <fieldset formGroupName="{{$index}}">
+        <legend>Instruction {{$index + 1}}</legend>
+        <p>
+        <label [for]="'step' + $index">Etape</label>
+        <input [id]="'step' + $index" type="number" formControlName="step">
+        </p>
+        <p>
+        <label [for]="'description' + $index">Description</label>
+        <input [id]="'description' + $index" type="text" formControlName="description">
+        </p>
+        </fieldset>
+        }
+        <button type="button" (click)="addInstruction()">Ajouter une instruction</button>
+      </fieldset>
+
+
+    </div>
+    <button type="submit">Créer la recette</button>
+  </form>
+</div>
+
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (recipe of recipes; track recipe) {
+      <tr>
+        <td>{{ recipe.name }}</td>
+        <td>
+<!--          <button class="view" (click)="viewRecipe(recipe.id)">Détails</button>-->
+<!--          <button class="edit" (click)="editRecipe(recipe.id)">Modifier</button>-->
+          <button class="delete" (click)="deleteRecipe(recipe.id)">Supprimer</button>
+        </td>
+      </tr>
+    }
+    @empty {
+      <tr>
+        <td colspan="3" class="empty-message">Aucune recette en attente trouvée</td>
+      </tr>
+    }
+  </tbody>
+</table>

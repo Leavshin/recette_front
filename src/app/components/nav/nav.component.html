@@ -1,0 +1,38 @@
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a routerLink="/" class="navbar-logo">
+      <img src="assets/logo-recette.png" alt="Logo Délices Culinaires" class="logo-img">
+      <span class="logo-text">Délices Culinaires</span>
+    </a>
+    <!-- <div>
+      <form>
+        <input type="text" placeholder="Filtrer par mots-clés" />
+        <button class="primary" type="button">Rechercher</button>
+      </form>
+    </div>
+    <div class="results">
+
+    </div> -->
+    <ul class="navbar-menu">
+      <li><a routerLink="/" class="navbar-item">Accueil</a></li>
+      @if (userInfo.admin) {
+        <li><a routerLink="/admin" class="navbar-item">Admin</a></li>
+      }
+      @if (!userInfo.email) {
+        <li><a routerLink="/auth/login" class="navbar-item navbar-button">Connexion</a></li>
+      }
+      @if (userInfo.email) {
+        <li class="dropdown">
+          <a class="navbar-item dropdown-toggle">Mon Compte</a>
+          <ul class="dropdown-menu">
+            <li><a routerLink="/profil">Profil</a></li>
+            <li><a routerLink="/inventory">Inventaire</a></li>
+            <li><a routerLink="/favoris">Mes Recettes favorites</a></li>
+            <li><a (click)="logout()" class="logout-button">Déconnexion</a></li>
+          </ul>
+        </li>
+      }
+    </ul>
+  </div>
+</nav>
