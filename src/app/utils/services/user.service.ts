@@ -34,8 +34,12 @@ export class UserService {
     return this.http.delete<void>(`${this.apiUrl}${userId}/favorite-recipes/${recipeId}`);
   }
 
-  addIngredient(inventoryItems: Inventory[]): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}addIngredients`, inventoryItems);
+  addIngredient(inventoryItems: Inventory[]): Observable<Inventory[]> {
+    return this.http.post<Inventory[]>(`${this.apiUrl}addIngredients`, inventoryItems);
+  }
+
+  removeIngredient(inventoryItems: Inventory[]): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}removeIngredients`, inventoryItems);
   }
 
   getUserById(id: number): Observable<User> {

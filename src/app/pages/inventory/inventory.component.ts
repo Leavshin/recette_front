@@ -20,7 +20,7 @@ import {Observable, Subscription} from "rxjs";
 export class InventoryComponent implements OnInit, OnDestroy {
 
   user$?: Subscription;
-  user: User = {inventories: [], email: "toto@test", id: 6, name: "tototest"};
+  user: User = {inventories: [], email: "", id: -1, name: ""};
 
   inventoryForm = new FormGroup({
       ingredients: new FormArray([
@@ -43,7 +43,6 @@ export class InventoryComponent implements OnInit, OnDestroy {
        this.user$ = this.userService.getUserById(this.authService.user.id).subscribe((data: User) => {
         this.user = data;
         this.getIngredients();
-        this.initIngredientForm();
       });
     }
     console.log(this.user);
@@ -54,7 +53,6 @@ export class InventoryComponent implements OnInit, OnDestroy {
     if(this.user$ !== undefined) {
       this.user$.unsubscribe();
     }
-
   }
 
   addIngredient(){
@@ -62,18 +60,6 @@ export class InventoryComponent implements OnInit, OnDestroy {
       ingredient: new FormControl('', [Validators.required]),
       quantity: new FormControl(1, [Validators.required]),
     }))
-  }
-
-  initIngredientForm() {
-    for(let inventory of this.user.inventories) {
-      console.log(inventory.ingredient.name);
-      // let ingredientControl = new FormControl(inventory.ingredient, [Validators.required])
-      // ingredientControl.setValue(JSON.stringify(inventory.ingredient));
-      this.ingredients.push(new FormGroup({
-        ingredient: new FormControl(inventory.ingredient, [Validators.required]),
-        quantity: new FormControl(inventory.quantity, [Validators.required]),
-      }))
-    }
   }
 
   getIngredients() {
@@ -92,7 +78,17 @@ export class InventoryComponent implements OnInit, OnDestroy {
       for(let inventory of userInventory){
         inventory.account = this.user;
       }
-      this.userService.addIngredient(userInventory).subscribe();
+      this.userService.addIngredient(userInventory).subscribe((data: Inventory[]) => {
+        let newInventory: Inventory[] = [];
+        for(let inventory of this.user.inventories){
+          let found: Inventory | undefined = data.find((inv) => inv.ingredient.id === inventory.ingredient.id);
+          if(found) {
+            inventory.quantity += found.quantity;
+          }
+          newInventory.push(inventory);
+        }
+        this.user.inventories = newInventory;
+      });
     } else {
       alert("Formulaire invalide");
     }

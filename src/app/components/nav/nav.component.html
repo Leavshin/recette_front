@@ -16,7 +16,6 @@
     </div> -->
     <ul class="navbar-menu">
       <li><a routerLink="/" class="navbar-item">Accueil</a></li>
-      <li><a routerLink="/user" class="navbar-item">Compte</a></li>
       @if (userInfo.admin) {
         <li><a routerLink="/admin" class="navbar-item">Admin</a></li>
       }
@@ -24,12 +23,12 @@
         <li><a routerLink="/auth/login" class="navbar-item navbar-button">Connexion</a></li>
       }
       @if (userInfo.email) {
-        <li><a routerLink="/favoris" class="navbar-item">Favoris</a></li>
         <li class="dropdown">
           <a class="navbar-item dropdown-toggle">Mon Compte</a>
           <ul class="dropdown-menu">
             <li><a routerLink="/profil">Profil</a></li>
-            <li><a routerLink="/mes-recettes">Mes Recettes</a></li>
+            <li><a routerLink="/inventory">Inventaire</a></li>
+            <li><a routerLink="/favoris">Mes Recettes favorites</a></li>
             <li><a (click)="logout()" class="logout-button">Déconnexion</a></li>
           </ul>
         </li>
