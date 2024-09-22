@@ -6,5 +6,5 @@ export type User = {
     email: string,
     password?: string
     admin?: boolean
-    inventories?: Inventory[]
+    inventories: Inventory[]
   }
