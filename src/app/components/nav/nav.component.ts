@@ -10,7 +10,7 @@ import {User} from "../../utils/types/user.types";
   imports: [
     RouterLink,
     HomeComponent
-],
+  ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })

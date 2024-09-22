@@ -10,6 +10,7 @@ import {AuthComponent} from './pages/auth/auth.component';
 import {LoginComponent} from './pages/auth/login/login.component';
 import {RegisterComponent} from './pages/auth/register/register.component';
 import {RecipesComponent} from "./pages/recipes/recipes.component";
+import {InventoryComponent} from "./pages/inventory/inventory.component";
 
 export const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -27,7 +28,7 @@ export const routes: Routes = [
     ]
   },
   {path: 'recipe/:id', component: RecipesComponent},
-  {path: 'selected_recipe', component: SelectedRecipeComponent},
+  {path: 'inventory', component: InventoryComponent},
   {path: 'home', redirectTo: ''},
   {path: '**', component: NotFoundComponent},
 ];
