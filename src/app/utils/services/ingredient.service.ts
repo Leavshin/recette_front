@@ -64,10 +64,10 @@ export class IngredientService {
   }
 
   // Mettre à jour un ingrédient existant
-  updateIngredient(id: string, updatedIngredient: Ingredient): void {
+  updateIngredient(id: number, updatedIngredient: Ingredient): void {
     this.http.put<Ingredient>(`${this.apiUrl}update/${id}`, updatedIngredient).subscribe({
       next: (responseIngredient: any) => {
-        const currentIngredients = this.ingredients.value.map((ingredient: { id: string; }) =>
+        const currentIngredients = this.ingredients.value.map((ingredient: { id: number; }) =>
           ingredient.id === id ? responseIngredient : ingredient
         );
         this.ingredients.next(currentIngredients); // Mettre à jour localement
@@ -77,10 +77,10 @@ export class IngredientService {
   }
 
   // Supprimer un ingrédient par ID
-  deleteIngredient(id: string): void {
+  deleteIngredient(id: number): void {
     this.http.delete(`${this.apiUrl}delete/${id}`).subscribe({
       next: () => {
-        const currentIngredients = this.ingredients.value.filter((ingredient: { id: string; }) => ingredient.id !== id);
+        const currentIngredients = this.ingredients.value.filter((ingredient: { id: number; }) => ingredient.id !== id);
         this.ingredients.next(currentIngredients); // Mettre à jour localement
       },
       error: (error: any) => console.error('Error deleting ingredient', error)

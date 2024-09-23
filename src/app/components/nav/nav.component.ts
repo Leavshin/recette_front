@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../utils/services/auth.service';
 import { HomeComponent } from "../../pages/home/home.component";
+import {User} from "../../utils/types/user.types";
 
 @Component({
   selector: 'app-nav',
@@ -9,23 +10,24 @@ import { HomeComponent } from "../../pages/home/home.component";
   imports: [
     RouterLink,
     HomeComponent
-],
+  ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
-export class NavComponent {
-  isLoggedIn: boolean = false;
+export class NavComponent implements OnInit {
 
-  constructor(private authService: AuthService) {
-    this.updateLoginStatus();
-  }
-
-  updateLoginStatus() {
-    this.isLoggedIn = this.authService.isLoggedIn();
-  }
+  constructor(private authService: AuthService) {}
 
   logout() {
     this.authService.logout();
-    this.updateLoginStatus();
   }
+
+  get userInfo(): Partial<User> {
+    return this.authService.user;
+  }
+
+  ngOnInit() {
+    this.authService.getUserInfo();
+  }
+
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from '../types/user.types';
 import { environment } from '../../../environments/environment';
@@ -11,19 +11,40 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  user: Partial<User> = {
+    id: -1,
+    email: '',
+    admin: false
+  }
 
-  register(user: Partial<User>): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/register`, user).pipe(
+  userChange$: BehaviorSubject<Partial<User>>;
+
+  constructor(private http: HttpClient) {
+    let userStorage = localStorage.getItem('user');
+    if (userStorage) {
+      this.user = JSON.parse(userStorage);
+    }
+    this.userChange$ = new BehaviorSubject(this.user);
+    this.userChange$.subscribe(change => this.user = change);
+  }
+
+  register(user: Partial<User>): Observable<boolean> {
+    return this.http.post<boolean>(`${this.apiUrl}/auth/register`, user).pipe(
       catchError(this.handleError)
     );
   }
 
   login(credentials: Pick<User, 'email' | 'password'>): Observable<boolean> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/auth/login`, credentials).pipe(
+    return this.http.post<User>(`${this.apiUrl}/auth/login`, credentials).pipe(
       map(response => {
-        if (response && response.token) {
-          localStorage.setItem('token', response.token);
+        if (response) {
+          this.user = {
+            id: response.id,
+            email: response.email,
+            admin: response.admin
+          }
+          localStorage.setItem('user', JSON.stringify(this.user));
+          this.userChange$.next(this.user)
           return true;
         }
         return false;
@@ -32,16 +53,18 @@ export class AuthService {
     );
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  getUserInfo(): void {
+    this.userChange$.next(this.user);
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.userChange$.next({
+      id: -1,
+      email: '',
+      admin: false
+    })
   }
 
   private handleError(error: any) {
