@@ -22,10 +22,14 @@ export class UserComponent implements OnInit {
   favoriteRecipes: Recipe[] = [];
 
   user: User = {
-
-
+    id: -1,
+    name: "",
+    allergies: "",
+    email: "",
+    inventories: [],
+    password: "",
+    preferences: ""
   }
-
 
   constructor(
     private userService: UserService,
@@ -37,21 +41,24 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.loadFavoriteRecipes();
     this.loadUserProfile();
-    this.authService.
   }
 
   loadUserProfile(): void {
-    this.userService.getUser(this.user.id).subscribe({
+    this.userService.getUserById(this.user.id).subscribe({
       next: (userData) => this.user = userData,
       error: (error) => alert('Error fetching user profile')
     });
   }
 
   loadFavoriteRecipes(): void {
-    this.userService.getFavoriteRecipes(this.user.id).subscribe({
-      next: (recipes) => (this.favoriteRecipes = recipes),
-      error: (error) => alert('Error fetching favorite recipes')
-    });
+    this.authService.getUserInfo();
+    if(this.authService.user.id) {
+      this.userService.getFavoriteRecipes(this.authService.user.id).subscribe({
+        next: (recipes) => (this.favoriteRecipes = recipes),
+        error: (error) => alert('Error fetching favorite recipes')
+      });
+    }
+
   }
 
   viewRecipe(recipeId: number): void {
@@ -69,7 +76,7 @@ export class UserComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.userService.updateUser(this.userId, this.user).subscribe({
+    this.userService.updateUser(this.user.id, this.user).subscribe({
       next: (updatedUser) => {
         this.user = updatedUser;
         alert('Profil mis à jour avec succès');

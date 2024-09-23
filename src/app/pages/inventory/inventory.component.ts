@@ -10,6 +10,7 @@ import {User} from "../../utils/types/user.types";
 import {AuthService} from "../../utils/services/auth.service";
 import {Recipe} from "../../utils/types/recipe.types";
 import {Observable, Subscription} from "rxjs";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-inventory',
