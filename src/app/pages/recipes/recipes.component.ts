@@ -21,6 +21,7 @@ export class RecipesComponent implements OnInit {
   }
 
   id = 0;
+
   calories = 0;
   recipe: Recipe | undefined;
 
@@ -89,4 +90,5 @@ export class RecipesComponent implements OnInit {
   //     }
   //   });
   // }
+
 }

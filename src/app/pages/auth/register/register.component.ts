@@ -47,5 +47,6 @@ export class RegisterComponent {
         console.error('Erreur inattendue', err);
       }
     });
+
   }
 }

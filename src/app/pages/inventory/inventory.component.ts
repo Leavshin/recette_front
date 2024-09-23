@@ -1,3 +1,4 @@
+
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormArray, Validators, ReactiveFormsModule, FormControl} from '@angular/forms';
 import { Ingredient } from '../../utils/types/ingredient.types';
@@ -13,11 +14,12 @@ import {Observable, Subscription} from "rxjs";
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,RouterLink],
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
 export class InventoryComponent implements OnInit, OnDestroy {
+
 
   user$?: Subscription;
   user: User = {inventories: [], email: "", id: -1, name: ""};
@@ -32,12 +34,14 @@ export class InventoryComponent implements OnInit, OnDestroy {
     });
   ingredientsList: Ingredient[] = [];
 
+
   constructor(
     private ingredientService: IngredientService,
     private userService: UserService,
     private authService: AuthService) {}
 
   ngOnInit() {
+
     this.authService.getUserInfo();
     if(this.authService.user.id) {
        this.user$ = this.userService.getUserById(this.authService.user.id).subscribe((data: User) => {
@@ -60,7 +64,9 @@ export class InventoryComponent implements OnInit, OnDestroy {
       ingredient: new FormControl('', [Validators.required]),
       quantity: new FormControl(1, [Validators.required]),
     }))
+
   }
+
 
   getIngredients() {
     this.ingredientService.getAllIngredients().subscribe((data: Ingredient[]) => {

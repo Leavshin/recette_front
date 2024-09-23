@@ -1,8 +1,8 @@
+<p>favorite-recipe works!</p>
 <div class="user-profile">
-  <h2>Mon Profil</h2>
+  <h2>Mes recettes favorites</h2>
 
   <section class="favorite-recipes">
-    <h3>Mes Recettes Favorites</h3>
     @if (favoriteRecipes.length > 0) {
       <ul class="recipe-list">
         @for (recipe of favoriteRecipes; track recipe.id) {
